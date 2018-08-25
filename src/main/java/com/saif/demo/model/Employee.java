@@ -6,11 +6,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.saif.demo.pojo.BaseModel;
 
 @Entity
 @Table(name = "employees")
+@JsonInclude(Include.NON_EMPTY)
 public class Employee extends BaseModel {
 
     private static final long serialVersionUID = 7417728813892703016L;
@@ -23,13 +27,16 @@ public class Employee extends BaseModel {
     private String            name;
 
     @Column(name = "age")
-    private String            age;
+    private Integer           age;
 
     @Column(name = "username")
     private String            username;
 
     @Column(name = "department_id")
-    private String            departmentId;
+    private Integer           departmentId;
+
+    @Transient
+    private Department        department;
 
     public Integer getId() {
         return id;
@@ -47,11 +54,11 @@ public class Employee extends BaseModel {
         this.name = name;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -63,12 +70,20 @@ public class Employee extends BaseModel {
         this.username = username;
     }
 
-    public String getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(String departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
 }

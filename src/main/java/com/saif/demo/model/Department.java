@@ -11,11 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.saif.demo.pojo.BaseModel;
 
 @Entity
 @Table(name = "departments")
+@JsonInclude(Include.NON_EMPTY)
 public class Department extends BaseModel {
 
     private static final long serialVersionUID = 7417728813892703016L;
@@ -30,6 +34,9 @@ public class Department extends BaseModel {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     private Set<Employee>     employees;
+
+    @Transient
+    private Set<Integer>      employeeIds;
 
     public Integer getId() {
         return id;
@@ -53,6 +60,14 @@ public class Department extends BaseModel {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    public Set<Integer> getEmployeeIds() {
+        return employeeIds;
+    }
+
+    public void setEmployeeIds(Set<Integer> employeeIds) {
+        this.employeeIds = employeeIds;
     }
 
 }

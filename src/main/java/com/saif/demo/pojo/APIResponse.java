@@ -1,7 +1,12 @@
 package com.saif.demo.pojo;
 
 import java.io.Serializable;
+import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_EMPTY)
 public class APIResponse implements Serializable {
 
     public enum APIVersion {
@@ -10,7 +15,7 @@ public class APIResponse implements Serializable {
 
     private static final long serialVersionUID = 8033303766487038967L;
 
-    private APIVersion        version;
+    private APIVersion        version          = APIVersion.A;
 
     private Integer           totalCount;
 
@@ -28,6 +33,21 @@ public class APIResponse implements Serializable {
     public APIResponse(Serializable data, Integer totalCount, APIVersion version) {
         this.totalCount = totalCount;
         this.data = data;
+        this.version = version;
+    }
+
+    public APIResponse(Collection<?> data) {
+        this.data = (Serializable) data;
+    }
+
+    public APIResponse(Collection<?> data, Integer totalCount) {
+        this.totalCount = totalCount;
+        this.data = (Serializable) data;
+    }
+
+    public APIResponse(Collection<?> data, Integer totalCount, APIVersion version) {
+        this.totalCount = totalCount;
+        this.data = (Serializable) data;
         this.version = version;
     }
 
